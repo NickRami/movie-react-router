@@ -1,0 +1,26 @@
+.Container-logo { 
+    display: inline-block;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+
+
+.Contedor-Cards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    margin-left: 2.5rem;
+}
+
+
+/*VIDEO DE TRAILER*/
+
+.react-container{
+    height: 0;
+    width: 100%;
+    object-fit: cover;
+}
+
