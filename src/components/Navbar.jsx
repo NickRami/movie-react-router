@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
 
-    <Container sx={{mb: 15}}>
+    <Container  sx={{mb:10}}>
       
        <AppBar   sx={{p:1, backgroundColor: '#16423C'}}>
        <Toolbar sx={{display:'flex', justifyContent: 'space-between'}}>

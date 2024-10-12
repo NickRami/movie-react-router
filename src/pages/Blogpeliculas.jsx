@@ -11,7 +11,6 @@ const Blog = () => {
 
   const {data} = useLoaderData()
   const [usedata, setUsedata] = useState(data)
-// console.log(data);
 
   
   return (

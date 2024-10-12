@@ -2,12 +2,16 @@ import { Box, CardMedia, Container } from '@mui/material'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import ReactPlayerYoutube from 'react-player/youtube'
+
+
+
 import './index.css'
 const MovieTrailer = ({params}) => {
    
   const [trailer, setTrailer] = useState(params)
   const {key,id} = trailer
  
+    // console.log(key);
     
   
      useEffect(() => {
@@ -24,8 +28,9 @@ const MovieTrailer = ({params}) => {
       const apiMovie = async () => { 
         const date= await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=es-ES`, options);
         const trai = await date.json()
-        setTrailer(trai.results[4])
-        // console.log(trai.results[0].key);
+        setTrailer(trai.results[2])
+        // console.log(trai.results[1].id);
+        
         
       }
       apiMovie()
@@ -50,6 +55,9 @@ const MovieTrailer = ({params}) => {
   }} controls url={`https://www.youtube.com/watch?v=${key}`} >
       
     </ReactPlayerYoutube>
+
+
+ 
     
    </Box>
   )
