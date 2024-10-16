@@ -11,7 +11,6 @@ const Slider = (imagenes) => {
 
 
   const [movieimagenes, setMovieimagenes] = useState(imagenes.images)
-  console.log(movieimagenes);
   
   
   return (
@@ -32,7 +31,7 @@ const Slider = (imagenes) => {
        {
          movieimagenes.map((imagen) => ( 
         
-           <>
+          
       <SwiperSlide key={imagen.id}  style={{position: 'relative'}}>
 
           <img src={` https://image.tmdb.org/t/p/original/${imagen.backdrop_path}`}   alt="" />
@@ -45,7 +44,7 @@ const Slider = (imagenes) => {
 
       </SwiperSlide>
           
-          </>
+        
 
 
 

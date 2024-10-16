@@ -3,6 +3,7 @@ import React from 'react'
 import { useLoaderData } from 'react-router-dom'
 import MediaCard from '../components/MediaCard';
 import Slider from '../components/Slider';
+import Page from './Page';
 export const Home = () => {
 
   const {data} = useLoaderData()
@@ -14,8 +15,7 @@ export const Home = () => {
         
           <Box>
           <Slider images={data.results}/>
-        <MediaCard/>
-      
+             <MediaCard/>
           </Box>
 
     
@@ -23,8 +23,8 @@ export const Home = () => {
   )
 }
 
-export const loarderHome = async () => {
-
+export const loarderHome = async ({params}) => {
+  
   try {
     const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_API_KEY}&language=en-US&page=1`);
     const data = await response.json()

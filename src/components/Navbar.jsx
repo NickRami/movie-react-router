@@ -12,38 +12,47 @@ const Navbar = () => {
 
     <Container  sx={{mb:10}}>
       
-       <AppBar   sx={{p:1, backgroundColor: '#16423C'}}>
-       <Toolbar sx={{display:'flex', justifyContent: 'space-between'}}>
+       <AppBar sx={{ py:2, backgroundColor: '#16423C'}}>
+              <Toolbar style={{display:'flex', justifyContent:'space-around', flexBasis:'1'}} >
             
-        <div style={{display:'flex', alignItems: 'center'}}>
-        
-        <Link to={'/'}>
-        <img className='Container-logo' src="https://static.vecteezy.com/system/resources/previews/016/733/452/non_2x/cinema-logo-vector.jpg" alt="" />
-        </Link>
-         
-         <Typography 
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-         >
-             MOVIE
-         </Typography>
-        </div>
-
-
-            <TextField color='none'  className='input_buscar'  sx={{ width: '100%', maxWidth: '300px' ,  Height: '28px' , outline: 'none',backgroundColor: '#ffffff', borderRadius: '4px' }} placeholder='Buscar' >
-
-            </TextField>
+            <div style={{display:'flex', alignItems:'center'}}>
+            
+           <div>
+           <Link to={'/'}>
+            <img className='Container-logo' src="https://static.vecteezy.com/system/resources/previews/016/733/452/non_2x/cinema-logo-vector.jpg" alt="" />
+            </Link>
+           </div>
+             
+             <Typography 
+              variant="h6"
+              
+              component="h6"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', } }}
+             >
+                 MOVIE
+             </Typography>
+            </div>
+     
+            <div  className='content-button'>
+           <Button color='warning' variant='outlined'>Peliculas</Button>
+           <Button color='warning' variant='contained'>Series</Button>
+           <Button color='warning' variant='outlined'>Géneros</Button>
+           </div>
            
-          
-       <div>
-       <Button sx={{mr:3}} color='warning' variant='outlined'>Sign In</Button>
-       <Button color='warning' variant='contained'>Sign Up</Button>
-       </div>
-            
-   </Toolbar>
-
+           
+    
+                <TextField color='none'  className='input_buscar'  sx={{  Height: '28px' , outline: 'none',backgroundColor: '#ffffff', borderRadius: '4px' }} placeholder='Buscar' >
+    
+                </TextField>
+               
+              
+           <div className='content-button'>
+           <Button color='warning' variant='outlined'>Sign In</Button>
+           <Button color='warning' variant='contained'>Sign Up</Button>
+           </div>
+                
+       </Toolbar>
+    
         </AppBar> 
 
    

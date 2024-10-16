@@ -5,7 +5,7 @@ import Blog, { loaderBlog } from '../pages/Blogpeliculas';
 import LayoutPublic from '../layout/LayoutPublic';
 import { LoaderMovie } from '../components/MediaCard';
 import '../index.css'
-import MovieTrailer from '../components/MovieTrailer';
+import Page, { LoaderPage } from '../pages/Page';
 export const router = createBrowserRouter( [
 
     {
@@ -15,16 +15,20 @@ export const router = createBrowserRouter( [
         children : [
 
             {   
-                path: '/',
+                index: '/',
                 element : <Home/>,
                 loader: LoaderMovie,
             
+            },{   
+                path: '/page/:page',
+                element : <Page/>,
+                loader: LoaderPage,
             },
+          
             {
                  path: '/movie/:id',
                  element: <Blog/>,
                  loader: loaderBlog,
-                 
                     
                  
             },

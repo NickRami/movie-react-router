@@ -1,4 +1,4 @@
-import { Box, CardMedia, Container } from '@mui/material'
+import { Box, Button, CardMedia, Container } from '@mui/material'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import ReactPlayerYoutube from 'react-player/youtube'
@@ -7,14 +7,11 @@ import ReactPlayerYoutube from 'react-player/youtube'
 
 import './index.css'
 const MovieTrailer = ({params}) => {
-   
-  const [trailer, setTrailer] = useState(params)
-  const {key,id} = trailer
- 
-    // console.log(key);
-    
   
-     useEffect(() => {
+  const {id} = params
+  const [trailer, setTrailer] = useState(null);
+  
+  useEffect(() => {
        
       const options = {
         method: 'GET',
@@ -26,15 +23,32 @@ const MovieTrailer = ({params}) => {
 
 
       const apiMovie = async () => { 
-        const date= await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=es-ES`, options);
-        const trai = await date.json()
-        setTrailer(trai.results[2])
-        // console.log(trai.results[1].id);
-        
+        try {
+          const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=es-ES`, options);
+          const data = await response.json();
+  
+          if (data.results && data.results.length > 0) {
+            setTrailer(data.results[0]); // Puedes ajustar esto según cuál trailer desees mostrar
+          } else {
+            console.error('No trailers found');
+          }
+        } catch (error) {
+          console.error('Error fetching trailer:', error);
+        }
         
       }
       apiMovie()
-    },[])
+    },[id])
+
+    if (!trailer) {
+      return(
+        <Box mt={5} p={1} display={'flex'} justifyContent={'center'}>
+            <Button variant='outlined' color='warning'>No se encuentra Trailer</Button>
+        </Box>
+      )
+    }
+
+  const {key} = trailer
     
   return (
    <Box  my={5}  sx={{
@@ -46,7 +60,7 @@ const MovieTrailer = ({params}) => {
     backgroundColor: 'black'
   }} >
      
-      <ReactPlayerYoutube  
+       <ReactPlayerYoutube  
    key={id}  width="100%"
    height="100%"  style={{
     position: 'absolute',
@@ -54,8 +68,8 @@ const MovieTrailer = ({params}) => {
     left: 0,
   }} controls url={`https://www.youtube.com/watch?v=${key}`} >
       
-    </ReactPlayerYoutube>
-
+    </ReactPlayerYoutube> 
+ 
 
  
     

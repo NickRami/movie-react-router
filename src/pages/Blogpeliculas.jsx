@@ -1,6 +1,6 @@
-import { Box, Card, CardMedia, Container, Typography } from '@mui/material';
+import { Box, Button, Card, CardMedia, Container, Typography } from '@mui/material';
 import React, { useState } from 'react'
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import ReactPlayer from 'react-player/youtube';
 import MovieTrailer from '../components/MovieTrailer';
 import '../pages/index.css'
@@ -11,15 +11,16 @@ const Blog = () => {
 
   const {data} = useLoaderData()
   const [usedata, setUsedata] = useState(data)
-
+  
   
   return (
   
     <>
-        <Container sx={{ py: 1}} >
+        <Container sx={{ py: 4}} >
+            <Button sx={{mb:2}}  variant='contained' color='warning' component={Link} to= '/'>Volver</Button>
           <Box  display={'flex'} gap={2}>
-              <Card sx={{maxHeight: 800, minWidth: 300}} >
-                  <CardMedia component={'img'}  height={'100%'}  image={`https://image.tmdb.org/t/p/w500/${usedata.poster_path}`}/>
+              <Card sx={{ minWidth: 250,}} >
+                  <CardMedia component={'img'} height={380}   image={`https://image.tmdb.org/t/p/w500/${usedata.poster_path}`}/>
               </Card>
               <Box  >
                  <Typography component={'h1'} variant='h4' mb={2} fontFamily={'sans-serif'}>{usedata.title}</Typography>
@@ -53,6 +54,7 @@ const Blog = () => {
 
 export const loaderBlog = async ({params}) => { 
  
+  console.log(params);
   
    
 
