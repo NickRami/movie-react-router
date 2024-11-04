@@ -12,3 +12,14 @@
   width: 100%;
   object-fit: cover;
 }
+
+.ContainerSignIn{
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.GradientSignIn{ 
+  background-color: #FAD961;
+  background-image: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%);
+  padding-left: 4%;
+  padding-right: 4%;
+}  

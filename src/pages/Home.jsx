@@ -17,7 +17,7 @@ export const Home = () => {
           <Slider images={data.results}/>
              <MediaCard/>
           </Box>
-
+        
     
     
   )

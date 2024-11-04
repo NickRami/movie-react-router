@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
 
-    <Container  sx={{mb:10}}>
+    <Container  sx={{mb:12}}>
       
        <AppBar sx={{ py:2, backgroundColor: '#16423C'}}>
               <Toolbar style={{display:'flex', justifyContent:'space-around', flexBasis:'1'}} >
@@ -47,7 +47,9 @@ const Navbar = () => {
                
               
            <div className='content-button'>
-           <Button color='warning' variant='outlined'>Sign In</Button>
+            <Link to={'/SignIn'}>
+            <Button  color='warning' variant='outlined'>Sign In</Button>
+            </Link>
            <Button color='warning' variant='contained'>Sign Up</Button>
            </div>
                 

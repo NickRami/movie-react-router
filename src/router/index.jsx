@@ -6,6 +6,11 @@ import LayoutPublic from '../layout/LayoutPublic';
 import { LoaderMovie } from '../components/MediaCard';
 import '../index.css'
 import Page, { LoaderPage } from '../pages/Page';
+import SignIn from '../pages/SignIn';
+// import SignUp from '../pages/SignUp';
+
+
+
 export const router = createBrowserRouter( [
 
     {
@@ -31,9 +36,13 @@ export const router = createBrowserRouter( [
                  loader: loaderBlog,
                     
                  
-            },
-            
-            
-            ]
+           },
+          
+           
+        ]
     },
+    {
+             path: '/SignIn',
+             element: <SignIn/>
+    }
 ])

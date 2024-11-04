@@ -24,11 +24,11 @@ const MovieTrailer = ({params}) => {
 
       const apiMovie = async () => { 
         try {
-          const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=es-ES`, options);
+          const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=es-MX`, options);
           const data = await response.json();
   
           if (data.results && data.results.length > 0) {
-            setTrailer(data.results[0]); // Puedes ajustar esto según cuál trailer desees mostrar
+            setTrailer(data.results[1]); // Puedes ajustar esto según cuál trailer desees mostrar
           } else {
             console.error('No trailers found');
           }
@@ -66,7 +66,7 @@ const MovieTrailer = ({params}) => {
     position: 'absolute',
     top: 0,
     left: 0,
-  }} controls url={`https://www.youtube.com/watch?v=${key}`} >
+  }} controls url={`https://www.youtube.com/watch?v=${key}=es_MX`} >
       
     </ReactPlayerYoutube> 
  
