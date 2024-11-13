@@ -7,6 +7,7 @@ import { LoaderMovie } from '../components/MediaCard';
 import '../index.css'
 import Page, { LoaderPage } from '../pages/Page';
 import SignIn from '../pages/SignIn';
+import SignUp from '../pages/SignUp';
 // import SignUp from '../pages/SignUp';
 
 
@@ -44,5 +45,9 @@ export const router = createBrowserRouter( [
     {
              path: '/SignIn',
              element: <SignIn/>
+    },
+    {
+        path: '/SignUp',
+        element: <SignUp/>
     }
 ])
