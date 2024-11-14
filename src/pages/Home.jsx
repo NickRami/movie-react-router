@@ -1,13 +1,32 @@
-import { Box, Container, Typography } from '@mui/material';
-import React from 'react'
+import { Box, CircularProgress, linearProgressClasses, Stack, } from '@mui/material';
+import React, { useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import MediaCard from '../components/MediaCard';
 import Slider from '../components/Slider';
-import Page from './Page';
 export const Home = () => {
 
   const {data} = useLoaderData()
-  
+  const [isLoading, setIsLoading] = useState(true); // Estado para manejar la carga
+
+  // Este useEffect simula que los datos se cargan
+  useEffect(() => {
+    if (data) {
+     setTimeout(()=>{
+      setIsLoading(false); // Cambia a false cuando los datos se hayan cargado
+     },[2000])
+    }
+  }, [data]); // Solo se ejecuta cuando los datos cambian
+
+  // Mientras se carga, mostramos el spinner
+  if (isLoading) {
+    return (
+     <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={'100vh'}>
+         <Stack spacing={2} direction={'row'} alignItems={'center'} >
+        <CircularProgress size={50} color="error"  />
+      </Stack>
+     </Box>
+    );
+  }
   
 
   return (
@@ -23,7 +42,7 @@ export const Home = () => {
   )
 }
 
-export const loarderHome = async ({params}) => {
+export const loarderHome = async ({}) => {
   
   try {
     const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_API_KEY}&language=en-US&page=1`);

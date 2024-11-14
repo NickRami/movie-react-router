@@ -8,6 +8,7 @@ const LayoutPublic = () => {
     <div>
 
           <Navbar/>
+         
          <Outlet/>
     </div>
   )

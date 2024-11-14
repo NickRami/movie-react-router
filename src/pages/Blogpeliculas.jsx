@@ -1,17 +1,39 @@
-import { Box, Button, Card, CardMedia, Container, Typography } from '@mui/material';
-import React, { useState } from 'react'
-import { Link, useLoaderData } from 'react-router-dom';
+import { Box, Button, Card, CardMedia, CircularProgress, Container, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { Link, useLoaderData, useNavigation } from 'react-router-dom';
 import ReactPlayer from 'react-player/youtube';
 import MovieTrailer from '../components/MovieTrailer';
 import '../pages/index.css'
 
 
-
 const Blog = () => {
 
   const {data} = useLoaderData()
-  const [usedata, setUsedata] = useState(data)
+  const [usedata, setUsedata] = useState(null)
+  console.log(usedata);
   
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    
+  if (data) {
+    
+      setUsedata(data)
+   
+  }
+   
+  }, [data])
+  
+
+  if (!usedata) {
+    return (
+      navigation.state === 'loading' && (
+       <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={'100vh'}>
+           <CircularProgress size={50} color='secondary'/>
+       </Box>
+      )
+    )
+  }
   
   return (
   
@@ -23,16 +45,21 @@ const Blog = () => {
                   <CardMedia component={'img'} height={380}   image={`https://image.tmdb.org/t/p/w500/${usedata.poster_path}`}/>
               </Card>
               <Box  >
+                        
                  <Typography component={'h1'} variant='h4' mb={2} fontFamily={'sans-serif'}>{usedata.title}</Typography>
                  <Typography fontFamily={'sans-serif'} >
                     {usedata.overview}
                  </Typography>
                  <Typography component={'div'} mt={2}>
                         <>
-                        
+                        {navigation.state === 'loading' && (
+                        <Box display={'flex'} justifyContent="center" alignItems="center">
+                          <CircularProgress size={80} color="secondary" />
+                        </Box>
+                      )}
                         {
-                        usedata.genres.map((item) => (
-                      <div  style={{display: 'inline-block'}} key={item.id}>
+                          usedata.genres.map((item) => (
+                            <div  style={{display: 'inline-block'}} key={item.id}>
                            <Typography  component={'p'} color='info' display={'inline-block'} marginLeft={1}>
                               {item.name}
                          </Typography>
@@ -68,6 +95,10 @@ export const loaderBlog = async ({params}) => {
 const resp = await fetch(`https://api.themoviedb.org/3/movie/${params.id}?language=es-ES&${import.meta.env.VITE_API_KEY}`,options)
 const data = await resp.json()
 
+if (!resp.ok) {
+  throw new Error("Error al cargar los datos");
+  
+}
 
 return {data};
 
