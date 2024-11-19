@@ -34,8 +34,12 @@ const Navbar = () => {
             </div>
      
             <div  className='content-button'>
-           <Button color='warning' variant='outlined'>Peliculas</Button>
-           <Button color='warning' variant='contained'>Series</Button>
+           <Link to={'/'}>
+           <Button color='warning' variant='contained'>Peliculas</Button>
+           </Link>
+          <Link to={'/series'}> 
+          <Button color='warning' variant='outlined' >Series</Button>
+          </Link>
            <Button color='warning' variant='outlined'>Géneros</Button>
            </div>
            
@@ -48,9 +52,9 @@ const Navbar = () => {
               
            <div className='content-button'>
             <Link to={'/SignIn'}>
-            <Button  color='warning' variant='outlined'>Sign In</Button>
+            <Button  color='warning' variant='outlined'>Iniciar Sesión</Button>
             </Link>
-           <Button color='warning' variant='contained'>Sign Up</Button>
+           <Button color='warning' variant='contained'>Registrarse</Button>
            </div>
                 
        </Toolbar>

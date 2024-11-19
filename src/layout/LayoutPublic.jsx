@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar'
 const LayoutPublic = () => {
   return (
     
-    <div>
+    <div style={{backgroundColor:'#FBF8EF'}}>
 
           <Navbar/>
          

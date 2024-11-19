@@ -8,6 +8,7 @@ import '../index.css'
 import Page, { LoaderPage } from '../pages/Page';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
+import Series, { loaderSeries } from '../pages/Series';
 // import SignUp from '../pages/SignUp';
 
 
@@ -38,6 +39,11 @@ export const router = createBrowserRouter( [
                     
                  
            },
+           {
+                 path:'/series',
+                 element: <Series/>,
+                 loader: loaderSeries,
+           }
           
            
         ]

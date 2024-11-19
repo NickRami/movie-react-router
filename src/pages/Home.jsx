@@ -13,7 +13,7 @@ export const Home = () => {
     if (data) {
      setTimeout(()=>{
       setIsLoading(false); // Cambia a false cuando los datos se hayan cargado
-     },[2000])
+     },[1500])
     }
   }, [data]); // Solo se ejecuta cuando los datos cambian
 
@@ -33,7 +33,7 @@ export const Home = () => {
    
         
           <Box>
-          <Slider images={data.results}/>
+          <Slider />
              <MediaCard/>
           </Box>
         
