@@ -10,9 +10,9 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
 
-    <Container  sx={{mb:12}}>
+    <Container  sx={{mb:10}} >
       
-       <AppBar sx={{ py:2, backgroundColor: '#16423C'}}>
+       <AppBar sx={{ py:3, backgroundColor: '#16423C'}}>
               <Toolbar style={{display:'flex', justifyContent:'space-around', flexBasis:'1'}} >
             
             <div style={{display:'flex', alignItems:'center'}}>

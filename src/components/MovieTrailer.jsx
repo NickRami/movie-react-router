@@ -1,18 +1,23 @@
 import { Box, Button, CardMedia, Container } from '@mui/material'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import ReactPlayerYoutube from 'react-player/youtube'
+import ReactPlayer from 'react-player/lazy'
 
 
 
 import './index.css'
-const MovieTrailer = ({params}) => {
+import { Autoplay } from 'swiper/modules'
+const MovieTrailer = ({id}) => {
   
-  const {id} = params
-  const [trailer, setTrailer] = useState(null);
+  const [trailerMovies, setTrailerMovies] = useState()
+   
+
   
+  
+  
+
   useEffect(() => {
-       
+       if (!id) return 
       const options = {
         method: 'GET',
         headers: {
@@ -21,60 +26,87 @@ const MovieTrailer = ({params}) => {
         }
       };
 
+      const language = 'es-419'
 
       const apiMovie = async () => { 
         try {
-          const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=es-MX`, options);
+          const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${import.meta.env.VITE_API_KEY}&language=${language}`, options);
           const data = await response.json();
-  
-          if (data.results && data.results.length > 0) {
-            setTrailer(data.results[1]); // Puedes ajustar esto según cuál trailer desees mostrar
-          } else {
-            console.error('No trailers found');
+            console.log(data.results);
+            
+          if (response.ok && data.results.length > 0) {
+            const trailer = data.results.find((video) => video.type === 'Trailer');
+            if (trailer) {
+              setTrailerMovies(trailer.key);  // Guarda la clave del tráiler
+            }
           }
         } catch (error) {
-          console.error('Error fetching trailer:', error);
+          console.log(error);
         }
-        
       }
       apiMovie()
     },[id])
 
-    if (!trailer) {
+    
+    if (!trailerMovies) {
       return(
         <Box mt={5} p={1} display={'flex'} justifyContent={'center'}>
             <Button variant='outlined' color='warning'>No se encuentra Trailer</Button>
         </Box>
-      )
+      );
     }
 
-  const {key} = trailer
     
   return (
-   <Box  my={5}  sx={{
-    position: 'relative',
-    width: '100%',
-    paddingTop: '56.25%', // Relación de aspecto 16:9
-    overflow: 'hidden',
-    
-    backgroundColor: 'black'
-  }} >
+   
+   
+  
      
-       <ReactPlayerYoutube  
-   key={id}  width="100%"
-   height="100%"  style={{
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  }} controls url={`https://www.youtube.com/watch?v=${key}=es_MX`} >
-      
-    </ReactPlayerYoutube> 
- 
+   <Box justifyContent={'center'} display={'flex'} py={5}>
+       <div
+      style={{
+        position: 'relative',
+        width: '100%',       // 80% del ancho de la pantalla
+        maxWidth: '100%',  // Máximo 800px de ancho
+        paddingTop: '58%', // Relación de aspecto 16:9
+        height: 0,
+        paddingLeft: '1.5rem',
+        paddingRight: '1.5rem', 
+        backgroundColor: 'black',
+      }}
+    >
+      <ReactPlayer
+        url={`https://www.youtube.com/embed/${trailerMovies}`}
+        width="100%"
+        height="100%"
+        volume={20}
+        config={{
+         
+          youtube: {
+            playerVars:{
+             
+               vq: 'hd1080'
+            }
+            
+          } 
+        }}
 
- 
-    
+
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          objectFit: 'contain'
+        }}
+        controls
+      />
+    </div>
    </Box>
-  )
+  
+    
+);
+ 
+  
 }
 
 export default MovieTrailer
