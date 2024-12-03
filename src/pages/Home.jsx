@@ -1,15 +1,19 @@
-import {Box, Button, Card, CardContent, CardMedia, Container,Pagination,Stack,Typography,  } from '@mui/material';
+import {Box, Button, Card, CardContent, CardMedia, Container,Rating,Stack,Typography,  } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
-import CardPeliculas from '../components/PeliculasCard';
-import SeriesCard from '../components/SeriesCard';
+import {  useNavigate, useParams } from 'react-router-dom'
+import { useUserContext } from './Context/UserContext';
 
 
 
-export const Home = ({children}) => {
-
+export const Home = () => {
+  
   const [movies, setMovies] = useState([]);
   const [series, setSeries] = useState([]);
+  const [value, setValue] = useState(3)
+  const [filteredSeries,setFilteredSeries] = useState([])
+  const [filteredMovies, setFilteredMovies] = useState([])
+    
+  const {searchQuery} = useUserContext()
   
   useEffect(() => {
     // Cargar películas populares
@@ -17,8 +21,9 @@ export const Home = ({children}) => {
       try {
         const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_API_KEY}&language=es-ES`);
         const data = await response.json();
+        // console.log('peliculas cargadas', data.results);
         
-        setMovies(data);
+        setMovies(data.results);
       } catch (error) {
         console.error('Error fetching movies:', error);
       }
@@ -29,8 +34,9 @@ export const Home = ({children}) => {
       try {
         const response = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${import.meta.env.VITE_API_KEY}&language=es-ES`);
         const data = await response.json();
-        
-        setSeries(data);
+        // console.log('series cargadas', data.results);
+
+        setSeries(data.results);
       } catch (error) {
         console.error('Error fetching series:', error);
       }
@@ -39,10 +45,33 @@ export const Home = ({children}) => {
     fetchMovies();
     fetchSeries();
   }, []);
+
+
+  useEffect(() => {
+    // console.log('Buscando:', searchQuery);  // Verifica si searchQuery tiene valor
+    const search = searchQuery ? searchQuery.trim().toLowerCase() : "";  
+    if (search) {
+      // Si movies o series están vacíos, no intentamos filtrar
+      if (movies.length > 0 && series.length > 0) {
+        const filteredMovies = movies.filter((movie) =>
+          (movie.title || '').toLowerCase().includes(search.toLowerCase())
+        );
+        const filteredSeries = series.filter((serie) =>
+          (serie.name || '').toLowerCase().includes(search.toLowerCase())
+        );
+  
+        setFilteredMovies(filteredMovies);
+        setFilteredSeries(filteredSeries);
+      }
+    } else {
+      // Si no hay término de búsqueda, mostramos todas las películas y series
+      setFilteredMovies(movies);
+      setFilteredSeries(series);
+    }
+  }, [searchQuery, movies, series]); // Dependemos de searchQuery, movies y series
   
   const {id} = useParams()
 
-  console.log(id);
   
   const navigate = useNavigate()
   const handleNavigate = (id) => {
@@ -53,36 +82,52 @@ export const Home = ({children}) => {
     navigate(`series/${id}`)
   }
 
+  const handleValueChange = (event,newValue) => {
+    setValue(newValue)
+  }
+
+  // const  [{id:idTrailer}] = movies.results
+  // console.log(idTrailer);
+  
+  const idTrailers = movies.results?.map( item => item.id)
+
+ 
+
   return (
    
         
           <Box  > 
-             
+              {/* <MovieTrailer id={idTrailers}/> */}
              <Container >
                     
                     <Box  display={'flex'} flexWrap={'wrap'} gap={4} justifyContent={'center'} sx={{py:3}}>
                     <div style={{width: '100%', display:'block', paddingTop:10, paddingBottom:10}}>
                   <Typography  variant='h5' ml={2}  fontWeight={500}  sx={{ borderBottom: '#6256CA solid', display:'inline-block'}} >Pelicula Destacadas</Typography>
+                 
                   </div>
                         {
-                          movies.results?.map(({poster_path,name,overview,id,release_date}) => (
-                            
+                          filteredMovies.length > 0 ? (
+                          filteredMovies.map((movie) => (
                             
                            
-                          <Card key={id}  style={{cursor: 'pointer', position:'relative'}} sx={{ width: 200, maxHeight: 450 ,boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', position: 'relative'  }} onClick={() => handleNavigate(id)} >
-                        <CardMedia  sx={{objectFit: 'cover',height: 300}} image={`https://image.tmdb.org/t/p/original/${poster_path}`}>
+                          <Card key={movie.id}  style={{cursor: 'pointer', position:'relative'}} sx={{ width: 200, maxHeight: 450 ,boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', position: 'relative'  }} onClick={() => handleNavigate(movie.id)} >
+                        <CardMedia  sx={{objectFit: 'cover',height: 300}} image={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
                            
                         </CardMedia>
                        <CardContent sx={{height:'100%',backgroundColor:'#16423c', color:'white'}}>
-                       <Typography textOverflow={'ellipsis'} sx={{overflow:'hidden', whiteSpace:'nowrap'}}  fontSize={16}  t fontFamily={'sans-serif'} textAlign={'center'} >{name}</Typography>
+                       <Typography  textOverflow={'ellipsis'} sx={{overflow:'hidden', whiteSpace:'nowrap'}}  fontSize={16}  t fontFamily={'sans-serif'} textAlign={'center'} >{movie.title}</Typography>
+
+                            <Stack spacing={2}>
+                              <Rating onChange={handleValueChange} readOnly value={movie.vote_average / 2 } precision={0.1}/>
+                            </Stack>
                        </CardContent>
                     <Button className='botton-card' size='small' sx={{position:'absolute', top: '0px', right: '0rem', backgroundColor: 'orange'}}  variant='contained' >
-                   {release_date}
+                   {movie.release_date}
                 </Button>
                     </Card>
                          
                 
-            ) ) 
+            ) )) : (<p>No se encontraron peliculas</p>)
         }
                   
                     </Box>
@@ -101,36 +146,40 @@ export const Home = ({children}) => {
                   <Typography  variant='h5' ml={2}  fontWeight={500}  sx={{ borderBottom: '#6256CA solid', display:'inline-block'}} >Series Destacadas</Typography>
                   </div>
                         {
-                         series.results?.map(({poster_path,title,overview,id,release_date}) => (
-                            
+                         filteredSeries.length > 0 ? (
+                         filteredSeries.map((serie) => (
                             
                            
-                          <Card key={id} onClick={() => handleNavegationSerie(id)}  style={{cursor: 'pointer', position:'relative'}} sx={{ width: 200, maxHeight: 450 ,boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', position: 'relative'  }}  >
-                        <CardMedia  sx={{objectFit: 'cover',height: 300}} image={`https://image.tmdb.org/t/p/original/${poster_path}`}>
+                           
+                          <Card key={serie.id} onClick={() => handleNavegationSerie(serie.id)}  style={{cursor: 'pointer', position:'relative'}} sx={{ width: 200, maxHeight: 450 ,boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', position: 'relative'  }}  >
+                        <CardMedia  sx={{objectFit: 'cover',height: 300}} image={`https://image.tmdb.org/t/p/original/${serie.poster_path}`}>
                            
                         </CardMedia>
-                       <CardContent sx={{height:'100%',backgroundColor:'#16423c', color:'white'}}>
-                       <Typography textOverflow={'ellipsis'} sx={{overflow:'hidden', whiteSpace:'nowrap'}}  fontSize={16}  t fontFamily={'sans-serif'} textAlign={'center'} >{title}</Typography>
+                       <CardContent sx={{backgroundColor:'#16423c', color:'white'}}>
+                       <Typography textOverflow={'ellipsis'} sx={{overflow:'hidden', whiteSpace:'nowrap'}}   fontFamily={'sans-serif'} textAlign={'center'} >{serie.name}</Typography>
+
+                       <Stack  spacing={2} py={1} alignItems={'flex-start'}>
+                        <Rating onChange={handleValueChange}  readOnly value={serie.vote_average / 2}/>
+
+                      
+                       </Stack>
                        </CardContent>
                     
                     </Card>
                          
                 
-            ) ) 
+            ) )) : ( <p>no se encontraron series</p> )
         }
                   
                     </Box>
     
                   
-             
+
                 
                 </Container>
             
              
           </Box>
-        
-    
-    
   )
 }
 

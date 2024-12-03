@@ -1,13 +1,14 @@
-import { AppBar, Box, Button, Container, IconButton, InputAdornment, TextField, Toolbar, Typography } from '@mui/material';
-import React from 'react'
-import MenuIcon from '@mui/icons-material/Menu';
-import { Search } from '@mui/icons-material';
-import SearchIcon from '@mui/icons-material/Search';
+import { AppBar,  Button, Container, TextField, Toolbar, Typography } from '@mui/material';
 import './index.css'
 import { Link } from 'react-router-dom';
+import {  useUserContext } from '../pages/Context/UserContext';
 
 
 const Navbar = () => {
+
+  
+  const {searchQuery,handleSearchChange} = useUserContext()
+  
   return (
 
     <Container  sx={{mb:10}} >
@@ -45,7 +46,7 @@ const Navbar = () => {
            
            
     
-                <TextField color='none'  className='input_buscar'  sx={{  Height: '28px' , outline: 'none',backgroundColor: '#ffffff', borderRadius: '4px' }} placeholder='Buscar' >
+                <TextField color='none' type='text' className='input_buscar'   sx={{  Height: '28px' , outline: 'none',backgroundColor: '#ffffff', borderRadius: '4px' }} placeholder='Buscar peliculas o series' value={searchQuery || ""} onChange={handleSearchChange} >
     
                 </TextField>
                

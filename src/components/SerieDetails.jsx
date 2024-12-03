@@ -12,9 +12,9 @@ const SerieDetail = () => {
   
   const {data} = useLoaderData()
   const [movieDetails, setMoviedetails] = useState(data)
+console.log(data);
 
   const {movieId} = useParams()
-  console.log(movieId);
   
   const navigate = useNavigate()
 

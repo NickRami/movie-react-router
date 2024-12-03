@@ -1,17 +1,21 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Outlet } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { Box, Container } from '@mui/material'
 
 const LayoutPublic = () => {
+  
+
+
+  
   return (
     
     <div >
 
-          <Navbar/>
+          <Navbar  />
          
         <Box sx={{backgroundColor: '#EEEEEE', py: 5}} >
-        <Outlet/>
+        <Outlet />
         </Box>
     </div>
   )
