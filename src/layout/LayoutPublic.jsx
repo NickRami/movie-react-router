@@ -10,14 +10,17 @@ const LayoutPublic = () => {
   
   return (
     
-    <div >
-
+  
+<>
+    
           <Navbar  />
          
-        <Box sx={{backgroundColor: '#EEEEEE', py: 5}} >
-        <Outlet />
-        </Box>
-    </div>
+        
+         <Outlet />
+
+</>
+     
+    
   )
 }
 

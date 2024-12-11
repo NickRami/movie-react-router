@@ -2,6 +2,7 @@ import {Box, Button, Card, CardContent, CardMedia, Container,Rating,Stack,Typogr
 import React, { useEffect, useState } from 'react'
 import {  useNavigate, useParams } from 'react-router-dom'
 import { useUserContext } from './Context/UserContext';
+import Slider from '../components/Slider';
 
 
 
@@ -95,12 +96,12 @@ export const Home = () => {
 
   return (
    
-        
-          <Box  > 
-              {/* <MovieTrailer id={idTrailers}/> */}
+        <>
+            <Slider/>
+     <Box  py={5}> 
              <Container >
                     
-                    <Box  display={'flex'} flexWrap={'wrap'} gap={4} justifyContent={'center'} sx={{py:3}}>
+                    <Box  display={'flex'} flexWrap={'wrap'} gap={4} justifyContent={'center'} >
                     <div style={{width: '100%', display:'block', paddingTop:10, paddingBottom:10}}>
                   <Typography  variant='h5' ml={2}  fontWeight={500}  sx={{ borderBottom: '#6256CA solid', display:'inline-block'}} >Pelicula Destacadas</Typography>
                  
@@ -180,6 +181,7 @@ export const Home = () => {
             
              
           </Box>
+        </>
   )
 }
 

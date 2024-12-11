@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Container, Typography } from '@mui/material';
 import React, { useState } from 'react'
 
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
@@ -24,19 +24,29 @@ console.log(data);
   // if (!movieDetails) return <div>Loading...</div>;
 
   return (
-    <Box display={'flex'} py={2} >
+ 
+   <>
+   
+    <Container>
+    <Box display={'flex'} alignItems={'center'} justifyContent={'space-around'} py={5} gap={5}  >
     <section >
-    <Button onClick={handleClick} size='medium' sx={{ml:3}} variant='contained' color='warning'>
+    <Button onClick={handleClick} size='medium' sx={{my:3}} variant='contained' color='warning'>
         Volver
     </Button>
-    <Card sx={{ width: 250, maxWidth: 300, margin: '20px', boxShadow: 3, borderRadius: 2, position: 'relative' }}>
+    <Card sx={{ width: '100%', boxShadow: 3, borderRadius: 2, position: 'relative' }}>
   {/* Imagen del póster */}
   <CardMedia
     component="img"
     alt={data.title || data.name}
-    height="350"
+    height="auto"
     image={`https://image.tmdb.org/t/p/w500${data.poster_path}`} // Asegúrate de usar el tamaño adecuado
-    sx={{ objectFit: 'cover' }}
+    sx={{
+      width: '100%',  // Asegura que la imagen ocupe todo el ancho disponible
+      objectFit: 'cover',  // Cambia esto según el efecto que desees (contain, cover, fill)
+      maxHeight: '400px', // Limita la altura máxima para que no se estire demasiado
+      borderTopLeftRadius: 100,  // Redondea las esquinas de la imagen
+      borderTopRightRadius: 2, // Redondea las esquinas de la imagen
+    }}
   />
   
   {/* Contenido de la tarjeta */}
@@ -58,8 +68,8 @@ console.log(data);
 </Card>    
     </section>     
 
-<section style={{padding:2}} >
-<Typography textAlign={'left'} py={5} variant="subtitle1" fontFamily={'sans-serif'} fontWeight={500}   sx={{ marginTop: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+<section style={{display:'flex',alignItems:'center', justifyContent:'center', width:'100%'}} >
+<Typography textAlign={'left'} variant="subtitle1" fontFamily={'sans-serif'} fontWeight={500}   sx={{  overflow: 'hidden', textOverflow: 'ellipsis' }}>
       {data.overview || 'No hay descripción disponible.'}
 </Typography>
 </section>
@@ -67,6 +77,11 @@ console.log(data);
    
 
   </Box>
+    </Container>
+   
+   </>
+   
+
   );
 };
 export default SerieDetail;
