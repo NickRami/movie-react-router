@@ -31,17 +31,14 @@ const MovieDetails = () => {
         <Button onClick={handleClick}  size='medium' sx={{my:2}} variant='contained' color='warning'>
             Volver
         </Button>
-        <Card sx={{ width: '100%', boxShadow: 3, borderRadius: 2, position: 'relative' }}>
+        <Card sx={{ width: 200, boxShadow: 3, borderRadius: 2, position: 'relative' }}>
       {/* Imagen del póster */}
       <CardMedia
         component="img"
         alt={data.title || data.name}
-        height="300"
         image={`https://image.tmdb.org/t/p/w500${data.poster_path}`} // Asegúrate de usar el tamaño adecuado
         sx={{
-          width: '100%',  // Asegura que la imagen ocupe todo el ancho disponible
-          objectFit: 'cover',  // Cambia esto según el efecto que desees (contain, cover, fill)
-          maxHeight: '400px', // Limita la altura máxima para que no se estire demasiado
+          objectFit: 'cover',  // Cambia esto sefillgún el efecto que desees (contain, cover, fill)
           borderTopLeftRadius: 100,  // Redondea las esquinas de la imagen
           borderTopRightRadius: 2, // Redondea las esquinas de la imagen
         }}

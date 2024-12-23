@@ -54,3 +54,13 @@ body{
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+/* lista de los generos*/
+
+.list-genres:hover{
+  background-color: #ed6c02;
+  color: white;
+  height: auto;
+  width: 100%;
+  scroll-behavior: smooth;
+}

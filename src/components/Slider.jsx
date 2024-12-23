@@ -2,15 +2,15 @@
 import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import '../../node_modules/swiper/swiper-bundle.min.css';
-import { Navigation, Pagination} from 'swiper/modules';
-import { Box ,Typography } from '@mui/material';
-
+import { Autoplay, Navigation, Pagination} from 'swiper/modules';
+import { Box ,Button,Typography } from '@mui/material';
+import 'swiper/css'; 
+import { useNavigate } from 'react-router-dom';
 
 
 const Slider = () => {
 
   const [proxiMovie, setProxiMovies] = useState([])
-  console.log(proxiMovie);
   
   useEffect(()=>{
     const fetchProximamentMovie = async() => {
@@ -23,7 +23,7 @@ const Slider = () => {
           }
         };
       
-        const resp = await fetch("https://api.themoviedb.org/3/movie/upcoming?language=es-ES&page=1",options)
+        const resp = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_API_KEY}&language=es`,options)
         const data = await resp.json()
         
         setProxiMovies(data.results)
@@ -35,6 +35,13 @@ const Slider = () => {
     fetchProximamentMovie()
   },[]) 
 
+        const navigate = useNavigate()
+        
+      const handleNavigate = (id) => {
+        navigate(`movies/${id}`)
+        console.log(id);
+        
+      }
 
   return (
     <Swiper
@@ -46,18 +53,30 @@ const Slider = () => {
         prevEl: '.swiper-button-prev',
       }}
       pagination={{ clickable: true }}
-      autoplay={{ delay: 4500, disableOnInteraction: false }}
       loop={true}
       
     >
      
         {
           proxiMovie.map((movie) => (
-           <SwiperSlide style={{position:'relative'}}>
-              <img  style={{objectFit:'cover',maxHeight:700, height:'auto'}} src={`https://image.tmdb.org/t/p/original${movie.backdrop_path
-}`} alt="" />
-              <Typography sx={{position:'absolute'}} color='warning' left={100} top={100}>{`${movie.title} `  }</Typography>
-              <Typography sx={{position:'absolute',color:'white'}} left={100} top={130} width={360} >{movie.overview}</Typography>
+           <SwiperSlide key={movie.id} style={{position:'relative'}} >
+             
+              <img style={{objectFit:'cover',maxHeight:700, height:'auto'}}  src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`} alt={`${movie.title}`} />
+              
+            
+             <Typography style={{cursor:'pointer'}}  onClick={() => handleNavigate(movie.id)}  sx={{position:'absolute'}} color='warning' variant='h4' left={100} top={140}>{`${movie.title} `  }</Typography> 
+              
+           
+
+            
+            <div style={{position:'absolute', left: 100}}>
+            <Typography sx={{color:'white'}}  maxWidth={880} >{movie.overview}</Typography>
+         
+            
+         <Button sx={{position:'absolute',mt:5}} variant='contained' color='warning' onClick={() => handleNavigate(movie.id)}>Ir</Button>
+         
+            </div>
+           
            </SwiperSlide> 
           ))
         }

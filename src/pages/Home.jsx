@@ -20,7 +20,7 @@ export const Home = () => {
     // Cargar películas populares
     const fetchMovies = async () => {
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_API_KEY}&language=es-ES`);
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}&language=es-ES`);
         const data = await response.json();
         // console.log('peliculas cargadas', data.results);
         
@@ -71,7 +71,7 @@ export const Home = () => {
     }
   }, [searchQuery, movies, series]); // Dependemos de searchQuery, movies y series
   
-  const {id} = useParams()
+  // const {id} = useParams()
 
   
   const navigate = useNavigate()
@@ -87,10 +87,7 @@ export const Home = () => {
     setValue(newValue)
   }
 
-  // const  [{id:idTrailer}] = movies.results
-  // console.log(idTrailer);
-  
-  const idTrailers = movies.results?.map( item => item.id)
+ 
 
  
 
@@ -111,7 +108,7 @@ export const Home = () => {
                           filteredMovies.map((movie) => (
                             
                            
-                          <Card key={movie.id}  style={{cursor: 'pointer', position:'relative'}} sx={{ width: 200, maxHeight: 450 ,boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', position: 'relative'  }} onClick={() => handleNavigate(movie.id)} >
+                          <Card key={movie.id}  style={{cursor: 'pointer', position:'relative'}} sx={{ width: 200, maxHeight: 450 ,boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', position: 'relative'  }} onClick={() => handleNavigate(movie.id)} > 
                         <CardMedia  sx={{objectFit: 'cover',height: 300}} image={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}>
                            
                         </CardMedia>
